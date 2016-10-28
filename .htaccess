@@ -1,0 +1,24 @@
+<Files ~ "^.(htaccess|htpasswd)$">
+deny from all
+</Files>
+<IfModule mod_rewrite.c>
+AddDefaultCharset UTF-8
+
+RewriteEngine On
+RewriteCond %{HTTP_USER_AGENT} "^Mozilla/4.0 \(compatible; MSIE 6.0;"
+RewriteRule  .*  -  [F]
+
+
+#RewriteBase /forum/
+
+
+RewriteRule submit index.php?s=submit
+RewriteRule search/(.*)$ index.php?s=search&w=$1 
+RewriteRule thread/([0-9]+)(/?)(.*)$ index.php?s=thread&id=$1 
+RewriteRule thread-edit/([0-9]+)(/?)(.*)$ index.php?s=thread_edit&id=$1 
+RewriteRule ^-?([0-9]+)$ index.php?p=$1 
+
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule (.*) index.php?s=$1
+</IfModule>
